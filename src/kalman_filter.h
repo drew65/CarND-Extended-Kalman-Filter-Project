@@ -20,8 +20,14 @@ public:
   // measurement matrix
   Eigen::MatrixXd H_;
 
-  // measurement covariance matrix
-  Eigen::MatrixXd R_;
+  // measurement Jacobian matrix
+  Eigen::MatrixXd Hj_;
+
+  // measurement covariance matrix laser
+  Eigen::MatrixXd R_laser_;
+
+  // measurement covariance matrix radar
+  Eigen::MatrixXd R_radar_;
 
   /**
    * Constructor

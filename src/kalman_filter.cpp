@@ -13,7 +13,7 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
   P_ = P_in;
   F_ = F_in;
   H_ = H_in;
-  R_ = R_in;
+  R_laser_ = R_in;
   Q_ = Q_in;
 }
 
