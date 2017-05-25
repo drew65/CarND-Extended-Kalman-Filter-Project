@@ -76,3 +76,31 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
 	return Hj;
 }
+
+
+VectorXd Tools::Polar2Cartesian(const VectorXd &measurements) {
+  /**
+  * A helper method to convert polar to cartesian coordinates.
+  */
+  Eigen::VectorXd coord;
+  coord = VectorXd(2);
+  coord(0) = cos(measurements(1)) * measurements(0);
+  coord(1) = sin(measurements(1)) * measurements(0);
+
+  return coord;
+}
+
+  VectorXd Tools::Cartesian2Polar(const VectorXd &measurements) {
+    /**
+    * A helper method to convert cartesian to polar coordinates.
+      radius = sqrt(X * X + Y * Y)
+      angle = atan2(Y, X)
+    */
+    Eigen::VectorXd coord;
+    coord = VectorXd(2);
+    coord(0) = sqrt(measurements(0) * measurements(0) + measurements(1) * measurements(1));
+    coord(1) = atan2(measurements(1), measurements(0));
+
+    return coord;
+
+}
