@@ -35,6 +35,18 @@ void KalmanFilter::Update(const VectorXd &z) {
   TODO:
     * update the state by using Kalman Filter equations
   */
+  /*
+   * KF Measurement update step
+   */
+  VectorXd y_ = z - H_ * x_;
+  MatrixXd Ht_ = H_.transpose();
+  MatrixXd S_ = H_ * P_ * Ht_ + R_laser_;
+  MatrixXd Si_ = S_.inverse();
+  MatrixXd K_ =  P_ * Ht_ * Si_;
+
+  //new state
+  x_ = x_ + (K_ * y_);
+  P_ = (I_ - K_ * H_) * P_;
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {

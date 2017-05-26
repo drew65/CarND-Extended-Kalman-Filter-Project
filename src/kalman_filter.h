@@ -29,6 +29,10 @@ public:
   // measurement covariance matrix radar
   Eigen::MatrixXd R_radar_;
 
+  // identity matrix
+  Eigen::MatrixXd I_;
+
+
   /**
    * Constructor
    */

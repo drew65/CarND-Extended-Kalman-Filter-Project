@@ -36,8 +36,8 @@ FusionEKF::FusionEKF() {
     * Set the process and measurement noises
   */
   //TODO measurment xxx matrix - laser
-  H_laser_ << 0, 0, 0, 0,
-              0, 0, 0, 0;
+  H_laser_ << 1, 0, 0, 0,
+              0, 1, 0, 0;
 
   //measurment Jacobian matrix - radar
   Hj_ << 0, 0, 0, 0,
@@ -126,13 +126,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.R_radar_ = MatrixXd(3, 3);
     ekf_.R_radar_ = R_radar_;
 
-    //measurment matrix - radar
+    //measurment matrix - laser
     ekf_.H_ = MatrixXd(2, 4);
-    ekf_.Hj_ = Hj_;
+    ekf_.H_ = H_laser_;
 
     //measurment Jacobian matrix - radar
     ekf_.Hj_ = MatrixXd(3, 4);
     ekf_.Hj_ = Hj_;
+
+    ekf_.I_ = MatrixXd::Identity(4, 4);
 
     // set ekf_ variables
     //ekf_.Init(x_in, P_in, F_in, H_in, R_in, Q_in);
@@ -186,13 +188,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
+    ekf_.UpdateEKF(measurement_pack.raw_measurements_);
     cout << "sensor type = Radar\n";
     VectorXd coord = tools.Polar2Cartesian(measurement_pack.raw_measurements_);
     ekf_.x_ << coord[0], coord[1], 0, 0;
   } else {
     // Laser updates
+    ekf_.Update(measurement_pack.raw_measurements_);
     cout << "sensor type = Laser\n";
-    ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+    //ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
   }
 
   // print the output
