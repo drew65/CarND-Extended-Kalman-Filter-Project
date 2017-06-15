@@ -41,7 +41,7 @@ public:
 
   float pie;
   //test counter
-  int i;
+  //int i;
 
 };
 

@@ -130,13 +130,13 @@ int main()
           msgJson["estimate_x"] = p_x;
           msgJson["estimate_y"] = p_y;
           msgJson["rmse_x"] =  RMSE(0);
-          cout<<"RMSE x = "<<RMSE(0)<<"\n";
+          //cout<<"RMSE x = "<<RMSE(0)<<"\n";
           msgJson["rmse_y"] =  RMSE(1);
-          cout<<"RMSE y = "<<RMSE(1)<<"\n";
+          //cout<<"RMSE y = "<<RMSE(1)<<"\n";
           msgJson["rmse_vx"] = RMSE(2);
-          cout<<"RMSE xv = "<<RMSE(2)<<"\n";
+          //cout<<"RMSE xv = "<<RMSE(2)<<"\n";
           msgJson["rmse_vy"] = RMSE(3);
-          cout<<"RMSE yv = "<<RMSE(3)<<"\n";
+          //cout<<"RMSE yv = "<<RMSE(3)<<"\n";
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);

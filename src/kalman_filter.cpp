@@ -58,7 +58,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     * update the state by using Extended Kalman Filter equations
   */
   float pie = 3.14159;
-  //cout << "z =\n"<<z<<"\n";
+
   Eigen::VectorXd polar;
   polar = VectorXd(3);
   polar(0) = sqrt(x_(0) * x_(0) + x_(1) * x_(1));
@@ -69,7 +69,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   Eigen::VectorXd y_;
   y_ = VectorXd(3);
   y_ = z - polar;
-//cout << "y_ =\n"<<y_<<"\n";
+
   if (y_(1) > pie || y_(1) < -pie) {
     while (y_(1) > pie || y_(1) < -pie) {
       if (y_(1) > pie) y_(1) = y_(1) - (2*pie);
@@ -77,18 +77,18 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     }
   }
   MatrixXd Hjt_ = Hj_.transpose();
-//cout << "Hjt_ =\n"<<Hjt_<<"\n";
+
   MatrixXd S_ = Hj_ * P_ * Hjt_ + R_radar_;
-//cout << "S_ =\n"<<S_<<"\n";
+
   MatrixXd Si_ = S_.inverse();
-//cout << "Si_ =\n"<<Si_<<"\n";
+
   MatrixXd K_ =  P_ * Hjt_ * Si_;
-//cout << "K_ =\n"<<K_<<"\n";
+
 
   //new state
   x_ = x_ + (K_ * y_);
-//cout << "x_ =\n"<<x_<<"\n";
+
   P_ = (I_ - K_ * Hj_) * P_;
-//cout << "P_ =\n"<<P_<<"\n";
+
 
 }
