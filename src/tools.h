@@ -39,6 +39,10 @@ public:
   */
   VectorXd Cartesian2Polar(const VectorXd &measurements);
 
+  float pie;
+  //test counter
+  int i;
+
 };
 
 #endif /* TOOLS_H_ */
