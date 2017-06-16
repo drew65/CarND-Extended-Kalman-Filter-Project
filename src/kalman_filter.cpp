@@ -57,7 +57,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
-  float pie = 3.14159;
+  //float pie = 3.14159;
 
   Eigen::VectorXd polar;
   polar = VectorXd(3);
@@ -70,11 +70,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   y_ = VectorXd(3);
   y_ = z - polar;
 
-  if (y_(1) > pie || y_(1) < -pie) {
-    while (y_(1) > pie || y_(1) < -pie) {
-      if (y_(1) > pie) y_(1) = y_(1) - (2*pie);
-      if (y_(1) < -pie) y_(1) = y_(1) + (2*pie);
-    }
+  while (y_(1) > M_PI || y_(1) < -M_PI) {
+    if (y_(1) > M_PI) y_(1) = y_(1) - (2*M_PI);
+    if (y_(1) < -M_PI) y_(1) = y_(1) + (2*M_PI);
   }
   MatrixXd Hjt_ = Hj_.transpose();
 
